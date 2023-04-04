@@ -14,10 +14,20 @@ class MahasiswaController extends Controller
      */
     public function index(Request $request)
     {
+        // Search
+        $search =$request->search;
+        if(strlen($request->search)){
+            $mahasiswas = Mahasiswa::where('nim', 'like', "%$search%")
+            ->orWhere('Nama', 'like', "%$search%")
+            ->orWhere('Email', 'like', "%$search%")
+            ->paginate(5);
+        } else {
+            $mahasiswas = DB::table('mahasiswas')->paginate(5);    
+        }
         //fungsi eloquent menampilkan data menggunakan pagination 
         // $mahasiswas = Mahasiswa::all(); // Mengambil semua isi tabel
         // $posts = Mahasiswa::orderBy('Nim', 'desc')->paginate(5);  
-        $mahasiswas = DB::table('mahasiswas')->paginate(5);       
+           
         return view('mahasiswas.index', ['mahasiswas' => $mahasiswas]);
 
 
