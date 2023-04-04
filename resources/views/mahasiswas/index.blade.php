@@ -52,4 +52,6 @@
     </tr>
     @endforeach
 </table>
+{{$mahasiswas->withQueryString()->links()}}
+
 @endsection
